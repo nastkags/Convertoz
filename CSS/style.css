@@ -1,28 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
-/* CSS variables for website themes (light and dark) */
-/* White style */
 :root {
     --bg: #fff;
     --text-primary: #717171;
     --accent-color: #0066FF;
+    --accent-bg: rgba(0, 102, 255, 0.08);
     --text-secondary: #6B7280;
     --border-color: #EBEBEB;
     --success-color: #10B981;
     --svg-color: #4A5568;
+    --hover-bg: rgba(0, 0, 0, 0.04);
 }
 
-/* Dark style */
 .dark {
     --bg: #0B0E14;
     --text-primary: #FFFFFF;
     --accent-color: #0066FF;
+    --accent-bg: rgba(0, 102, 255, 0.15);
     --text-secondary: #9CA3AF;
     --border-color: #E0E0E0;
     --success-color: #10B981;
+    --svg-color: #9CA3AF;
+    --hover-bg: rgba(255, 255, 255, 0.06);
 }
 
-/* Global styles for the page */
 body {
     font-family: 'Lato', 'Plus Jakarta Sans', 'DM Sans';
     font-weight: 700;
@@ -36,7 +37,19 @@ body {
     box-sizing: border-box;
 }
 
-/* Sidebar navigation */
+.sidebar {
+    width: 220px;
+    min-height: 100vh;
+    border-right: 1px solid var(--border-color);
+    padding: 24px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
 nav a {
     display: flex;
     align-items: center;
@@ -44,17 +57,30 @@ nav a {
 
     text-decoration: none;
     color: inherit;
+
+    padding: 8px 12px;
+    border-radius: 8px;
+
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
+nav a:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Класс добавляется автоматически через JS в зависимости от текущей страницы */
+nav a.active {
+    background-color: var(--accent-bg);
+    color: var(--accent-color);
+}
+
+nav a.active svg {
+    color: var(--accent-color);
+}
 
 svg {
     width: 22px;
     height: 22px;
     color: var(--svg-color);
-}
-
-.sidebar {
-    width: 220px;
-    min-height: 100vh;
-    border-right: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
