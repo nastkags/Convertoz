@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 /* CSS variables for website themes (light and dark) */
 /* White style */
 :root {
@@ -7,7 +9,6 @@
     --text-secondary: #6B7280;
     --border-color: #E5E7EB;
     --success-color: #10B981;
-    
 }
 
 /* Dark style */
@@ -18,15 +19,20 @@
     --text-secondary: #9CA3AF;
     --border-color: #1F293D;
     --success-color: #10B981;
+}
+
+/* Global styles for the page */
+body {
+    font-family: 'Inter', 'Plus Jakarta Sans', 'DM Sans';
 
 }
 
 /* Sidebar navigation */
 nav a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
