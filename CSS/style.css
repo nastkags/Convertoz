@@ -1,86 +1,106 @@
+/* Import the Lato font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
+/* Global CSS variables for the light theme */
 :root {
-    --bg: #fff;
-    --text-primary: #717171;
-    --accent-color: #0066FF;
-    --accent-bg: rgba(0, 102, 255, 0.08);
-    --text-secondary: #6B7280;
-    --border-color: #EBEBEB;
-    --success-color: #10B981;
-    --svg-color: #4A5568;
-    --hover-bg: rgba(0, 0, 0, 0.04);
+--bg: #fff;
+--text-primary: #717171;
+--accent-color: #0066FF;
+--accent-bg: rgba(0, 102, 255, 0.08);
+--text-secondary: #6B7280;
+--border-color: #EBEBEB;
+--success-color: #10B981;
+--svg-color: #4A5568;
+--hover-bg: rgba(0, 0, 0, 0.04);
 }
 
+/* Override the variables when the .dark class is active */
 .dark {
-    --bg: #0B0E14;
-    --text-primary: #FFFFFF;
-    --accent-color: #0066FF;
-    --accent-bg: rgba(0, 102, 255, 0.15);
-    --text-secondary: #9CA3AF;
-    --border-color: #E0E0E0;
-    --success-color: #10B981;
-    --svg-color: #9CA3AF;
-    --hover-bg: rgba(255, 255, 255, 0.06);
+--bg: #0B0E14;
+--text-primary: #FFFFFF;
+--accent-color: #0066FF;
+--accent-bg: rgba(0, 102, 255, 0.15);
+--text-secondary: #9CA3AF;
+--border-color: #E0E0E0;
+--success-color: #10B981;
+--svg-color: #9CA3AF;
+--hover-bg: rgba(255, 255, 255, 0.06);
 }
 
+/* Global page styles */
 body {
-    font-family: 'Lato', 'Plus Jakarta Sans', 'DM Sans';
-    font-weight: 700;
-    color: #292929;
-    display: flex;
+font-family: 'Lato', 'Plus Jakarta Sans', 'DM Sans';
+font-weight: 700;
+color: #292929;
+display: flex;
 }
+
+/* Reset default spacing and include padding and borders inside element sizes */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
 
+/* Sidebar styles */
 .sidebar {
-    width: 220px;
-    min-height: 100vh;
-    border-right: 1px solid var(--border-color);
-    padding: 24px;
+width: 220px;
+min-height: 100vh;
+border-right: 1px solid var(--border-color);
+padding: 24px;
 }
 
+/* Stack navigation links vertically */
 .sidebar nav {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+display: flex;
+flex-direction: column;
+gap: 4px;
 }
 
+/* Navigation link styles */
 nav a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+display: flex;
+align-items: center;
+gap: 10px;
 
-    text-decoration: none;
-    color: inherit;
 
-    padding: 8px 12px;
-    border-radius: 8px;
+text-decoration: none;
+color: inherit;
 
-    transition: background-color 0.15s ease, color 0.15s ease;
+padding: 8px 12px;
+border-radius: 8px;
+
+/* Smooth transition when hover or active styles change */
+transition: background-color 0.15s ease, color 0.15s ease;
+
+
 }
 
+/* Change the background when the user hovers over a link */
 nav a:hover {
-    background-color: var(--hover-bg);
+background-color: var(--hover-bg);
 }
 
-/* Класс добавляется автоматически через JS в зависимости от текущей страницы */
+/* The class is automatically added via JavaScript depending on the current page */
 nav a.active {
-    background-color: var(--accent-bg);
-    color: var(--accent-color);
+background-color: var(--accent-bg);
+color: var(--accent-color);
 }
 
+/* Change the SVG icon color inside the active link */
 nav a.active svg {
-    color: var(--accent-color);
+color: var(--accent-color);
 }
 
+/* Default SVG icon styles */
 svg {
-    width: 22px;
-    height: 22px;
-    color: var(--svg-color);
-    flex-shrink: 0;
+width: 22px;
+height: 22px;
+color: var(--svg-color);
+
+
+/* Prevent the icon from shrinking inside a flex container */
+flex-shrink: 0;
+
 }
