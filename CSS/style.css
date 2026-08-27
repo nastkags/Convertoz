@@ -7,7 +7,7 @@
     --text-primary: #000;
     --accent-color: #0066FF;
     --text-secondary: #6B7280;
-    --border-color: #E5E7EB;
+    --border-color: #6B7280;
     --success-color: #10B981;
 }
 
@@ -44,4 +44,10 @@ span {
 svg {
     width: 20px;
     height: 20px;
+}
+
+
+/* Добавьте это к вашему селектору боковой панели (aside или .sidebar) */
+.sidebar {
+    border-right: 1px solid #E5E7EB;
 }
