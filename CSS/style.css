@@ -4,7 +4,7 @@
 /* White style */
 :root {
     --bg: #fff;
-    --text-primary: #000;
+    --text-primary: #717171;
     --accent-color: #0066FF;
     --text-secondary: #6B7280;
     --border-color: #6B7280;
@@ -37,17 +37,17 @@ nav a {
     color: inherit;
 }
 
-span {
-    font-weight: 700;
-}
-
 svg {
     width: 20px;
     height: 20px;
 }
 
-
-/* Добавьте это к вашему селектору боковой панели (aside или .sidebar) */
 .sidebar {
-    border-right: 1px solid #E5E7EB;
+    width: 240px;
+    height: 100vh;
+    border-right: 1px solid var(--border-color);
+}
+
+body {
+    display: flex;
 }
