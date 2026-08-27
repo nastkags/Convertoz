@@ -9,6 +9,7 @@
     --text-secondary: #6B7280;
     --border-color: #EBEBEB;
     --success-color: #10B981;
+    --svg-color: #4A5568;
 }
 
 /* Dark style */
@@ -47,8 +48,9 @@ nav a {
 
 
 svg {
-    width: 32px;
-    height: 32px;
+    width: 22px;
+    height: 22px;
+    color: var(--svg-color);
 }
 
 .sidebar {
