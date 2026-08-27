@@ -7,7 +7,7 @@
     --text-primary: #717171;
     --accent-color: #0066FF;
     --text-secondary: #6B7280;
-    --border-color: #6B7280;
+    --border-color: #EBEBEB;
     --success-color: #10B981;
 }
 
@@ -17,7 +17,7 @@
     --text-primary: #FFFFFF;
     --accent-color: #0066FF;
     --text-secondary: #9CA3AF;
-    --border-color: #1F293D;
+    --border-color: #E0E0E0;
     --success-color: #10B981;
 }
 
@@ -27,6 +27,12 @@ body {
     font-weight: 700;
     color: #292929;
     display: flex;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Sidebar navigation */
@@ -47,6 +53,6 @@ svg {
 
 .sidebar {
     width: 220px;
-    height: 100vh;
+    min-height: 100vh;
     border-right: 1px solid var(--border-color);
 }
