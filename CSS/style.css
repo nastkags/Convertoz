@@ -1,0 +1,32 @@
+/* CSS variables for website themes (light and dark) */
+/* White style */
+:root {
+    --bg: #fff;
+    --text-primary: #000;
+    --accent-color: #0066FF;
+    --text-secondary: #6B7280;
+    --border-color: #E5E7EB;
+    --success-color: #10B981;
+    
+}
+
+/* Dark style */
+.dark {
+    --bg: #0B0E14;
+    --text-primary: #FFFFFF;
+    --accent-color: #0066FF;
+    --text-secondary: #9CA3AF;
+    --border-color: #1F293D;
+    --success-color: #10B981;
+
+}
+
+/* Sidebar navigation */
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  text-decoration: none;
+  color: inherit;
+}
