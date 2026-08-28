@@ -133,7 +133,7 @@ svg {
   border-radius: 100%;
   border: 1px solid var(--border-color);
 
-  margin-bottom: 16px;
+  margin-bottom: 36px;
 
   transition: background-color 0.15s ease;
 }
