@@ -36,7 +36,6 @@ body {
 }
 
 /* Reset default spacing and include padding and borders inside element sizes */
-
 * {
   margin: 0;
   padding: 0;
@@ -64,7 +63,6 @@ nav a {
   align-items: center;
   gap: 10px;
 
-
   text-decoration: none;
   color: inherit;
 
@@ -73,8 +71,6 @@ nav a {
 
   /* Smooth transition when hover or active styles change */
   transition: background-color 0.15s ease, color 0.15s ease;
-
-
 }
 
 /* Change the background when the user hovers over a link */
@@ -99,10 +95,8 @@ svg {
   height: 22px;
   color: var(--svg-color);
 
-
   /* Prevent the icon from shrinking inside a flex container */
   flex-shrink: 0;
-
 }
 
 /* Profile at the top — placeholder, to be improved (avatar/photo) */
@@ -128,4 +122,88 @@ svg {
 .profile svg {
   width: 56px;
   height: 56px;
+}
+
+/* ===== Responsive design ===== */
+
+/* Tablets and small laptops: sidebar shrinks, text labels are hidden */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 80px;
+    padding: 16px 12px;
+    align-items: center;
+  }
+
+  .sidebar nav {
+    align-items: center;
+  }
+
+  /* Hide the text labels, keep only icons */
+  nav a span {
+    display: none;
+  }
+
+  nav a {
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .profile {
+    width: 48px;
+    height: 48px;
+  }
+
+  .profile svg {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Phones: sidebar turns into a bottom navigation bar */
+@media (max-width: 480px) {
+  body {
+    flex-direction: column;
+    padding-bottom: 64px;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    height: 64px;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 8px 16px;
+    border-right: none;
+    border-top: 1px solid var(--border-color);
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    order: 2;
+    /* push the sidebar to the bottom of the page */
+  }
+
+  .profile {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
+  }
+
+  .profile svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sidebar nav {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  nav a {
+    padding: 8px;
+  }
 }
