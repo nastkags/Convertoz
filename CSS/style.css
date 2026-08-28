@@ -50,6 +50,17 @@ body {
   padding: 24px;
 }
 
+/* Make sidebar a vertical flex container so Settings can be pushed to the bottom */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Push Settings link to the very bottom of the sidebar */
+.settings-link {
+  margin-top: auto;
+}
+
 /* Stack navigation links vertically */
 .sidebar nav {
   display: flex;
@@ -58,7 +69,7 @@ body {
 }
 
 /* Navigation link styles */
-nav a {
+.nav-link {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -74,18 +85,30 @@ nav a {
 }
 
 /* Change the background when the user hovers over a link */
-nav a:hover {
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  text-decoration: none;
+  color: inherit;
+
+  padding: 8px 12px;
+  border-radius: 8px;
+
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.nav-link:hover {
   background-color: var(--hover-bg);
 }
 
-/* The class is automatically added via JavaScript depending on the current page */
-nav a.active {
+.nav-link.active {
   background-color: var(--accent-bg);
   color: var(--accent-color);
 }
 
-/* Change the SVG icon color inside the active link */
-nav a.active svg {
+.nav-link.active svg {
   color: var(--accent-color);
 }
 
@@ -139,11 +162,11 @@ svg {
   }
 
   /* Hide the text labels, keep only icons */
-  nav a span {
+  .nav-link span {
     display: none;
   }
 
-  nav a {
+  .nav-link {
     justify-content: center;
     padding: 10px;
   }
