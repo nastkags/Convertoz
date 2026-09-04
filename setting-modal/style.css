@@ -863,3 +863,9 @@ dialog::backdrop {
 .custom-select-small .custom-select-trigger {
   min-width: 100px;
 }
+
+.about {
+  font-size: 15px;
+  color: var(--modal-text-muted);
+  margin-top: 2px
+}
