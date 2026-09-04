@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" data-accent="blue">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- Подключение CSS-файла -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Подключение js-файла -->
+  <script src="script.js" defer></script>
+
+  <!-- Иконки Tabler -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+</head>
+
+<body>
+
+  <!-- Кнопка, которая открывает модалку -->
+  <button id="openBtn">Открыть настройки</button>
+
+  <!-- Сама модалка. По умолчанию невидима, пока JS её не откроет -->
+  <dialog id="settingsModal">
+
+    <!-- Шапка модалки: иконка + заголовок + кнопка закрытия -->
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="ti ti-settings"></i>
+        <h2>Settings</h2>
+      </div>
+      <button id="closeBtn"><i class="ti ti-x"></i></button>
+    </div>
+
+    <!-- Основная часть: слева меню, справа контент -->
+    <div class="modal-content">
+
+      <!-- Левая колонка: навигация по разделам настроек -->
+      <aside class="modal-sidebar">
+        <nav class="settings-nav">
+          <!-- data-tab указывает, какой блок справа показать при клике -->
+          <a href="#" class="settings-nav-link active" data-tab="general">
+            <i class="ti ti-adjustments-horizontal"></i>
+            <span>General</span>
+          </a>
+          <a href="#" class="settings-nav-link" data-tab="appearance">
+            <i class="ti ti-moon-stars"></i>
+            <span>Appearance</span>
+          </a>
+          <a href="#" class="settings-nav-link" data-tab="privacy">
+            <i class="ti ti-shield"></i>
+            <span>Privacy</span>
+          </a>
+          <a href="#" class="settings-nav-link" data-tab="about">
+            <i class="ti ti-info-circle"></i>
+            <span>About</span>
+          </a>
+        </nav>
+        <!-- Карточка с информацией о приложении внизу -->
+        <div class="app-info-card">
+          <p class="app-info-name">Convertoz</p>
+          <p class="app-info-version">v1.0.0</p>
+          <p class="app-info-copyright">© 2026 Convertoz</p>
+        </div>
+      </aside>
+
+      <!-- Правая колонка: содержимое выбранного раздела -->
+      <div class="modal-main">
+
+        <div class="modal-main-scroll">
+
+          <!-- ===== Вкладка General ===== -->
+          <div class="tab-panel active" id="general">
+            <div class="section-heading">
+              <h3>General</h3>
+              <p>Basic preferences and default settings</p>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-text">
+                <p class="setting-title">Base currency</p>
+                <p class="setting-desc">Select your default currency</p>
+              </div>
+              <div class="custom-select">
+                <button class="custom-select-trigger" type="button">
+                  <span class="custom-select-value">USD — US Dollar</span>
+                  <i class="ti ti-chevron-down"></i>
+                </button>
+
+                <div class="custom-select-options">
+                  <div class="custom-select-option selected" data-value="USD — US Dollar">
+                    USD — US Dollar
+                    <i class="ti ti-check"></i>
+                  </div>
+                  <div class="custom-select-option" data-value="EUR — Euro">
+                    EUR — Euro
+                    <i class="ti ti-check"></i>
+                  </div>
+                  <div class="custom-select-option" data-value="GBP — British Pound">
+                    GBP — British Pound
+                    <i class="ti ti-check"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-text">
+                <p class="setting-title">Thousands separator</p>
+                <p class="setting-desc">Choose how to display large numbers</p>
+              </div>
+              <div class="custom-select custom-select-small">
+                <button class="custom-select-trigger" type="button">
+                  <span class="custom-select-value">1,234.56</span>
+                  <i class="ti ti-chevron-down"></i>
+                </button>
+
+                <div class="custom-select-options">
+                  <div class="custom-select-option selected" data-value="1,234.56">
+                    1,234.56
+                    <i class="ti ti-check"></i>
+                  </div>
+                  <div class="custom-select-option" data-value="1.234,56">
+                    1.234,56
+                    <i class="ti ti-check"></i>
+                  </div>
+                  <div class="custom-select-option" data-value="1 234.56">
+                    1 234.56
+                    <i class="ti ti-check"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-text">
+                <p class="setting-title">Auto swap</p>
+                <p class="setting-desc">Automatically swap currencies when selecting the same currency</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox">
+                <span class="switch-track"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- ===== Пустые вкладки — начиняй сам ===== -->
+          <div class="tab-panel" id="appearance">
+            <div class="section-heading">
+              <h3>Appearance</h3>
+              <p>Customize how Convertoz looks and feels</p>
+            </div>
+
+            <!-- Выбор темы: 3 карточки -->
+            <p class="group-label">Theme</p>
+            <div class="theme-options">
+
+              <label class="theme-card selected">
+                <input type="radio" name="theme" value="light" checked>
+                <div class="theme-card-top">
+                  <i class="ti ti-sun"></i>
+                  <span class="radio-dot"></span>
+                </div>
+                <p class="theme-card-title">Light</p>
+                <p class="theme-card-desc">Clean and bright</p>
+              </label>
+
+              <label class="theme-card">
+                <input type="radio" name="theme" value="dark">
+                <div class="theme-card-top">
+                  <i class="ti ti-moon"></i>
+                  <span class="radio-dot"></span>
+                </div>
+                <p class="theme-card-title">Dark</p>
+                <p class="theme-card-desc">Easy on the eyes</p>
+              </label>
+
+              <label class="theme-card">
+                <input type="radio" name="theme" value="system">
+                <div class="theme-card-top">
+                  <i class="ti ti-device-desktop"></i>
+                  <span class="radio-dot"></span>
+                </div>
+                <p class="theme-card-title">System</p>
+                <p class="theme-card-desc">Follow system setting</p>
+              </label>
+
+            </div>
+
+            <!-- Акцентный цвет -->
+            <p class="group-label">Accent color</p>
+            <div class="color-options">
+              <button class="color-swatch selected" data-accent="blue" style="background:#3B82F6"></button>
+
+              <button class="color-swatch" data-accent="purple" style="background:#7C3AED"></button>
+
+              <button class="color-swatch" data-accent="green" style="background:#10B981"></button>
+
+              <button class="color-swatch" data-accent="orange" style="background:#F59E0B"></button>
+
+              <button class="color-swatch" data-accent="pink" style="background:#EC4899"></button>
+
+              <button class="color-swatch" data-accent="gray" style="background:#9CA3AF"></button>
+            </div>
+
+            <!-- ЗАМЕТКА: выбор шрифта временно закомментирован, вернуться позже
+            <p class="group-label">Font</p>
+            <select class="setting-control setting-control-full">
+              <option>Inter (Default)</option>
+              <option>Roboto</option>
+              <option>Poppins</option>
+              <option>Lato</option>
+            </select>
+            -->
+
+            <!-- Emoji skin tone (шутки ради, как у GitHub) -->
+            <p class="group-label">Emoji skin tone preference</p>
+            <p class="group-sublabel">Preferred default emoji skin tone</p>
+            <div class="emoji-tone-row">
+              <label class="emoji-tone-item selected">
+                <input type="radio" name="emoji-tone" value="neutral" checked>
+                <span class="emoji-radio"></span>
+                <span class="emoji-tone-icon">👋</span>
+              </label>
+
+              <label class="emoji-tone-item">
+                <input type="radio" name="emoji-tone" value="light">
+                <span class="emoji-radio"></span>
+                <span class="emoji-tone-icon">👋🏻</span>
+              </label>
+
+              <label class="emoji-tone-item">
+                <input type="radio" name="emoji-tone" value="medium-light">
+                <span class="emoji-radio"></span>
+                <span class="emoji-tone-icon">👋🏼</span>
+              </label>
+
+              <label class="emoji-tone-item">
+                <input type="radio" name="emoji-tone" value="medium">
+                <span class="emoji-radio"></span>
+                <span class="emoji-tone-icon">👋🏽</span>
+              </label>
+
+              <label class="emoji-tone-item">
+                <input type="radio" name="emoji-tone" value="medium-dark">
+                <span class="emoji-radio"></span>
+                <span class="emoji-tone-icon">👋🏾</span>
+              </label>
+
+              <label class="emoji-tone-item">
+                <input type="radio" name="emoji-tone" value="dark">
+                <span class="emoji-radio"></span>
+                <span class="emoji-tone-icon">👋🏿</span>
+              </label>
+            </div>
+
+            <!-- сюда добавишь свой контент -->
+          </div>
+
+          <div class="tab-panel" id="privacy">
+            <div class="section-heading">
+              <h3>Privacy</h3>
+              <p>Manage your data and privacy settings</p>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-text">
+                <p class="setting-title">Save conversion history</p>
+                <p class="setting-desc">Keep a local record of your past conversions</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" checked>
+                <span class="switch-track"></span>
+              </label>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-text">
+                <p class="setting-title">Share anonymous usage data</p>
+                <p class="setting-desc">Help improve Convertoz by sharing anonymous analytics</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox">
+                <span class="switch-track"></span>
+              </label>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-text">
+                <p class="setting-title">Clear conversion history</p>
+                <p class="setting-desc">Permanently delete all saved conversions</p>
+              </div>
+              <button class="btn btn-secondary">Clear history</button>
+            </div>
+
+            <div class="setting-row danger-row">
+              <div class="setting-text">
+                <p class="setting-title">Delete account</p>
+                <p class="setting-desc">This action is permanent and cannot be undone</p>
+              </div>
+              <button class="btn btn-danger">Delete account</button>
+            </div>
+
+          </div>
+
+          <div class="tab-panel" id="about">
+            <div class="section-heading">
+              <h3>About Convertoz</h3>
+              <p>Details about Convertoz and useful links</p>
+            </div>
+
+            <div class="setting-row justify-content">
+              <p class="setting-title">Version</p>
+
+              <div class="version-wrapper" id="copy-version" style="cursor: pointer;">
+                <p class="setting-desc">1.0.0</p>
+                <!-- Вставьте вашу иконку SVG -->
+                <svg id="copy-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+                  <path
+                    d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+
+
+                </svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Футер с кнопками, прижат к низу правой колонки -->
+        <div class="modal-footer">
+          <button class="btn btn-secondary">Cancel</button>
+          <button class="btn btn-primary">Save changes</button>
+
+        </div>
+
+      </div>
+    </div>
+  </dialog>
+
+</body>
+
+</html>
