@@ -54,62 +54,75 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== Карточки выбора темы (Light / Dark / System) =====
   const themeCards = document.querySelectorAll('.theme-card');
 
+  // Функция, которая реально применяет тему (используется и при загрузке, и при клике)
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else if (theme === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else if (theme === 'system') {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+  }
+
+  // Применяем тему сразу при загрузке страницы — берём ту карточку,
+  // у которой изначально стоит checked (сейчас это "System")
+  const initialCard = document.querySelector('.theme-card input:checked');
+  if (initialCard) {
+    applyTheme(initialCard.value);
+  }
+
+  // Если выбрана System — следим за живым переключением темы в самой ОС
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    const currentTheme = document.querySelector('.theme-card input:checked');
+    if (currentTheme && currentTheme.value === 'system') {
+      applyTheme('system');
+    }
+  });
+
   themeCards.forEach(card => {
     card.addEventListener('click', () => {
 
-      // Убираем selected со всех карточек
+      // Убираем "selected" со всех карточек, ставим только на нажатую
       themeCards.forEach(c => c.classList.remove('selected'));
-
-      // Выбираем нажатую карточку
       card.classList.add('selected');
 
-      // Получаем выбранную тему
+      // Получаем выбранную тему и применяем её (через ту же функцию, что и при загрузке)
       const theme = card.querySelector('input').value;
-
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-
-      } else if (theme === 'light') {
-        document.documentElement.classList.remove('dark');
-
-      } else if (theme === 'system') {
-        // Пока просто определяем тему системы
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (prefersDark) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-      }
+      applyTheme(theme);
     });
   });
 
   // ===== Цветовые кружки акцента =====
- // ===== Выбор Accent color =====
+  // ===== Выбор Accent color =====
 
-const colorSwatches = document.querySelectorAll('.color-swatch');
+  const colorSwatches = document.querySelectorAll('.color-swatch');
 
-colorSwatches.forEach(swatch => {
+  colorSwatches.forEach(swatch => {
 
-  swatch.addEventListener('click', () => {
+    swatch.addEventListener('click', () => {
 
-    // Убираем selected со всех цветов
-    colorSwatches.forEach(s => {
-      s.classList.remove('selected');
+      // Убираем selected со всех цветов
+      colorSwatches.forEach(s => {
+        s.classList.remove('selected');
+      });
+
+      // Выбираем нажатый цвет
+      swatch.classList.add('selected');
+
+      // Получаем название цвета
+      const accent = swatch.getAttribute('data-accent');
+
+      // Меняем data-accent у <html>
+      document.documentElement.setAttribute('data-accent', accent);
     });
 
-    // Выбираем нажатый цвет
-    swatch.classList.add('selected');
-
-    // Получаем название цвета
-    const accent = swatch.getAttribute('data-accent');
-
-    // Меняем data-accent у <html>
-    document.documentElement.setAttribute('data-accent', accent);
   });
-
-});
 
 });
 
