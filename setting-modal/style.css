@@ -869,3 +869,96 @@ dialog::backdrop {
   color: var(--modal-text-muted);
   margin-top: 2px
 }
+
+/* Единая карточка-группа */
+.about-card {
+  background-color: var(--modal-surface);
+  border: 1px solid var(--modal-border);
+  border-radius: 12px;
+  margin-top: 16px;
+  overflow: hidden;
+}
+
+/* Строки внутри карточки */
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--modal-border);
+  border-radius: 0; 
+  margin: 0;
+}
+
+.setting-row:last-child {
+  border-bottom: none;
+}
+
+/* Подписи и значения внутри строк */
+.setting-subtitle {
+  font-size: 15px;
+  color: var(--modal-text-muted);
+  margin-top: 2px;
+  font-weight: normal;
+}
+
+/* Единый стиль внешней формы для всех элементов справа */
+.setting-value,
+.setting-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--modal-text-muted);
+  text-decoration: none;
+}
+
+.setting-value svg,
+.setting-link svg {
+  stroke: currentColor;
+  flex-shrink: 0;
+  margin-left: 2px; /* Дополнительный отступ слева от иконки */
+}
+
+/* Эффект при наведении только для ссылок */
+.setting-link:hover {
+  opacity: 0.75;
+}
+
+.setting-link:hover {
+  opacity: 0.75;
+}
+
+.setting-link svg {
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+/* ===== Стилизация скроллбара правого блока ===== */
+
+/* 1. Современный стандарт (Firefox / Chrome) */
+.modal-main-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--modal-border-strong) transparent;
+}
+
+/* 2. Для WebKit-браузеров (Chrome, Edge, Safari) */
+.modal-main-scroll::-webkit-scrollbar {
+  width: 6px; /* Ширина ползунка */
+}
+
+.modal-main-scroll::-webkit-scrollbar-track {
+  background: transparent; /* Прозрачный фон дорожки */
+}
+
+.modal-main-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--modal-border-strong); /* Цвет ползунка из переменных темы */
+  border-radius: 999px; /* Закругление */
+}
+
+.modal-main-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--modal-text-muted); /* Цвет при наведении */
+}
