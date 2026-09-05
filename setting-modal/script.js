@@ -1,49 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Находим три элемента: саму модалку, кнопку открытия и кнопку закрытия
+  // [01] Modal open / close ------------------------------------------------
+
   const modal = document.querySelector('#settingsModal');
   const openBtn = document.querySelector('#openBtn');
   const closeBtn = document.querySelector('#closeBtn');
 
-  // Клик по кнопке "Открыть настройки" → показываем модалку
   openBtn.addEventListener('click', () => {
     modal.showModal();
   });
 
-  // Клик по кнопке "✕" → закрываем модалку
   closeBtn.addEventListener('click', () => {
     modal.close();
   });
 
-  // Бонус: клик по затемнённому фону тоже закрывает модалку
+  // Clicking the dimmed backdrop also closes the modal
   modal.addEventListener('click', (event) => {
     if (event.target === modal) {
       modal.close();
     }
   });
 
-  // ===== Переключение вкладок в настройках =====
+  // [03] Sidebar tab switching ----------------------------------------------
 
-  // Находим все ссылки меню и все панели контента
   const tabLinks = document.querySelectorAll('.settings-nav-link');
   const tabPanels = document.querySelectorAll('.tab-panel');
 
   tabLinks.forEach(link => {
     link.addEventListener('click', (event) => {
-      // Не даём ссылке "прыгать" по странице (у нас href="#")
-      event.preventDefault();
+      event.preventDefault(); // links use href="#", stop the page from jumping
 
-      // Узнаём, какую вкладку нужно показать
       const targetTab = link.getAttribute('data-tab');
 
-      // 1. Убираем класс "active" у всех ссылок меню
       tabLinks.forEach(l => l.classList.remove('active'));
-      // 2. Добавляем "active" только той ссылке, по которой кликнули
       link.classList.add('active');
 
-      // 3. Скрываем все панели контента
       tabPanels.forEach(panel => panel.classList.remove('active'));
-      // 4. Показываем только ту панель, у которой id совпадает с data-tab
       const targetPanel = document.querySelector('#' + targetTab);
       if (targetPanel) {
         targetPanel.classList.add('active');
@@ -51,10 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== Карточки выбора темы (Light / Dark / System) =====
+  // [07] Theme switcher: Light / Dark / System -------------------------------
+
   const themeCards = document.querySelectorAll('.theme-card');
 
-  // Функция, которая реально применяет тему (используется и при загрузке, и при клике)
+  // Applies a theme to the document. Shared by the initial load and every
+  // click, so the logic only lives in one place.
   function applyTheme(theme) {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -62,151 +56,128 @@ document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.remove('dark');
     } else if (theme === 'system') {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (prefersDark) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+      document.documentElement.classList.toggle('dark', prefersDark);
     }
   }
 
-  // Применяем тему сразу при загрузке страницы — берём ту карточку,
-  // у которой изначально стоит checked (сейчас это "System")
-  const initialCard = document.querySelector('.theme-card input:checked');
-  if (initialCard) {
-    applyTheme(initialCard.value);
+  // Apply whichever theme card is marked checked in the HTML on page load
+  const initialThemeInput = document.querySelector('.theme-card input:checked');
+  if (initialThemeInput) {
+    applyTheme(initialThemeInput.value);
   }
 
-  // Если выбрана System — следим за живым переключением темы в самой ОС
+  // Keep the page in sync if the OS theme changes while "System" is selected
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    const currentTheme = document.querySelector('.theme-card input:checked');
-    if (currentTheme && currentTheme.value === 'system') {
+    const currentThemeInput = document.querySelector('.theme-card input:checked');
+    if (currentThemeInput && currentThemeInput.value === 'system') {
       applyTheme('system');
     }
   });
 
   themeCards.forEach(card => {
     card.addEventListener('click', () => {
-
-      // Убираем "selected" со всех карточек, ставим только на нажатую
       themeCards.forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
 
-      // Получаем выбранную тему и применяем её (через ту же функцию, что и при загрузке)
       const theme = card.querySelector('input').value;
       applyTheme(theme);
     });
   });
 
-  // ===== Цветовые кружки акцента =====
-  // ===== Выбор Accent color =====
+  // [08] Accent color picker -------------------------------------------------
 
   const colorSwatches = document.querySelectorAll('.color-swatch');
 
   colorSwatches.forEach(swatch => {
-
     swatch.addEventListener('click', () => {
-
-      // Убираем selected со всех цветов
-      colorSwatches.forEach(s => {
-        s.classList.remove('selected');
-      });
-
-      // Выбираем нажатый цвет
+      colorSwatches.forEach(s => s.classList.remove('selected'));
       swatch.classList.add('selected');
 
-      // Получаем название цвета
       const accent = swatch.getAttribute('data-accent');
-
-      // Меняем data-accent у <html>
       document.documentElement.setAttribute('data-accent', accent);
     });
-
   });
 
-});
+  // [09] Emoji skin tone preference (visual selection only, no persistence yet)
 
+  const emojiToneItems = document.querySelectorAll('.emoji-tone-item');
 
-// ===== Emoji skin tone (в стиле GitHub) =====
-const emojiToneItems = document.querySelectorAll('.emoji-tone-item');
-
-emojiToneItems.forEach(item => {
-  item.addEventListener('click', () => {
-    emojiToneItems.forEach(i => i.classList.remove('selected'));
-    item.classList.add('selected');
-  });
-});
-
-// ===== Кастомные dropdown-списки (замена нативного <select>) =====
-const customSelects = document.querySelectorAll('.custom-select');
-
-customSelects.forEach(select => {
-  const trigger = select.querySelector('.custom-select-trigger');
-  const valueLabel = select.querySelector('.custom-select-value');
-  const options = select.querySelectorAll('.custom-select-option');
-
-  trigger.addEventListener('click', () => {
-    const isOpening = !select.classList.contains('open');
-
-    select.classList.toggle('open');
-
-    if (isOpening) {
-      const triggerRect = trigger.getBoundingClientRect();
-      const optionsHeight = select.querySelector('.custom-select-options').offsetHeight;
-      const spaceBelow = window.innerHeight - triggerRect.bottom;
-
-      if (spaceBelow < optionsHeight) {
-        select.classList.add('open-up');
-      } else {
-        select.classList.remove('open-up');
-      }
-    }
-  });
-
-  options.forEach(option => {
-    option.addEventListener('click', () => {
-      options.forEach(o => o.classList.remove('selected'));
-      option.classList.add('selected');
-      valueLabel.textContent = option.getAttribute('data-value');
-      select.classList.remove('open');
+  emojiToneItems.forEach(item => {
+    item.addEventListener('click', () => {
+      emojiToneItems.forEach(i => i.classList.remove('selected'));
+      item.classList.add('selected');
     });
   });
-});
 
-// Клик где угодно вне dropdown — закрывает все открытые списки
-document.addEventListener('click', (event) => {
+  // [09] Custom select dropdowns (replaces native <select>) -----------------
+
+  const customSelects = document.querySelectorAll('.custom-select');
+
   customSelects.forEach(select => {
-    if (!select.contains(event.target)) {
-      select.classList.remove('open');
-    }
+    const trigger = select.querySelector('.custom-select-trigger');
+    const valueLabel = select.querySelector('.custom-select-value');
+    const options = select.querySelectorAll('.custom-select-option');
+
+    trigger.addEventListener('click', () => {
+      const isOpening = !select.classList.contains('open');
+      select.classList.toggle('open');
+
+      if (isOpening) {
+        // Flip the list above the trigger if there isn't enough room below
+        const triggerRect = trigger.getBoundingClientRect();
+        const optionsHeight = select.querySelector('.custom-select-options').offsetHeight;
+        const spaceBelow = window.innerHeight - triggerRect.bottom;
+
+        select.classList.toggle('open-up', spaceBelow < optionsHeight);
+      }
+    });
+
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        options.forEach(o => o.classList.remove('selected'));
+        option.classList.add('selected');
+        valueLabel.textContent = option.getAttribute('data-value');
+        select.classList.remove('open');
+      });
+    });
   });
+
+  // Clicking anywhere outside an open dropdown closes it
+  document.addEventListener('click', (event) => {
+    customSelects.forEach(select => {
+      if (!select.contains(event.target)) {
+        select.classList.remove('open');
+      }
+    });
+  });
+
+  // [11] Copy version number to clipboard ------------------------------------
+
+  const copyVersionBtn = document.querySelector('#copyVersionBtn');
+
+  if (copyVersionBtn) {
+    const copyIcon = copyVersionBtn.querySelector('.copy-icon');
+    const checkIcon = copyVersionBtn.querySelector('.check-icon');
+
+    copyVersionBtn.addEventListener('click', async () => {
+      const versionText = copyVersionBtn.querySelector('.version-text').textContent.trim();
+
+      try {
+        await navigator.clipboard.writeText(versionText);
+
+        copyVersionBtn.classList.add('copied');
+        copyIcon.style.display = 'none';
+        checkIcon.style.display = 'block';
+
+        setTimeout(() => {
+          copyVersionBtn.classList.remove('copied');
+          copyIcon.style.display = 'block';
+          checkIcon.style.display = 'none';
+        }, 1500);
+      } catch (err) {
+        console.error('Failed to copy version to clipboard:', err);
+      }
+    });
+  }
+
 });
-
-// ===== Копирование версии в буфер обмена =====
-const copyVersionBtn = document.querySelector('#copyVersionBtn');
-if (copyVersionBtn) {
-  const copyIcon = copyVersionBtn.querySelector('.copy-icon');
-  const checkIcon = copyVersionBtn.querySelector('.check-icon');
-
-  copyVersionBtn.addEventListener('click', async () => {
-    const versionText = copyVersionBtn.querySelector('.version-text').textContent.trim();
-
-    try {
-      await navigator.clipboard.writeText(versionText);
-
-      // Показываем галочку и подсвечиваем кнопку
-      copyVersionBtn.classList.add('copied');
-      copyIcon.style.display = 'none';
-      checkIcon.style.display = 'block';
-
-      // Возвращаем исходный вид через 1.5 секунды
-      setTimeout(() => {
-        copyVersionBtn.classList.remove('copied');
-        copyIcon.style.display = 'block';
-        checkIcon.style.display = 'none';
-      }, 1500);
-    } catch (err) {
-      console.error('Не удалось скопировать: ', err);
-    }
-  });
-}

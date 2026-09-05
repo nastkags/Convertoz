@@ -1,3 +1,5 @@
+/* [14] Design tokens — light / dark theme */
+
 :root {
   --bg: #ffffff;
   --text-primary: #1F2937;
@@ -25,25 +27,21 @@
   --modal-text: #E2E8F0;
   --modal-text-muted: #94A3B8;
   --modal-border: #2D3748;
-  /* Границы блоками стали хорошо видны */
   --modal-border-strong: #4A5568;
   --modal-surface: #11151D;
   --modal-surface-hover: #1A202C;
   --modal-surface-selected: #2D3748;
 
   --emoji-radio: #64748B;
-  /* Неактивные радио-кнопки теперь отчетливо видны */
   --danger-color: #F87171;
   --danger-bg: rgba(239, 68, 68, 0.15);
   --danger-border: rgba(239, 68, 68, 0.4);
 }
 
+/* [14] Design tokens — accent color variants
+   Each accent has a light-theme value and a dark-theme value,
+   selected via html[data-accent="..."] and html.dark[data-accent="..."] */
 
-/* ==========================================
-   АКЦЕНТНЫЕ ЦВЕТА (ВЫСОКАЯ ЯРКОСТЬ И КОНТРАСТ)
-   ========================================== */
-
-/* 1. СИНИЙ (BLUE) */
 html[data-accent="blue"] {
   --accent-color: #1D4ED8;
   --btn-primary: #1E40AF;
@@ -51,7 +49,6 @@ html[data-accent="blue"] {
   --accent-bg: rgba(37, 99, 235, 0.12);
 }
 
-/* Исходный синий (из самого первого варианта) */
 html.dark[data-accent="blue"] {
   --accent-color: #0066FF;
   --btn-primary: #005DE8;
@@ -59,7 +56,6 @@ html.dark[data-accent="blue"] {
   --accent-bg: rgba(0, 102, 255, 0.15);
 }
 
-/* 2. ФИОЛЕТОВЫЙ (PURPLE) */
 html[data-accent="purple"] {
   --accent-color: #7C3AED;
   --btn-primary: #6D28D9;
@@ -69,13 +65,11 @@ html[data-accent="purple"] {
 
 html.dark[data-accent="purple"] {
   --accent-color: #C084FC;
-  /* Сочный фиолетовый */
   --btn-primary: #A855F7;
   --emoji-tone-item: #C084FC;
   --accent-bg: rgba(192, 132, 252, 0.22);
 }
 
-/* 3. ЗЕЛЕНЫЙ (GREEN) */
 html[data-accent="green"] {
   --accent-color: #047857;
   --btn-primary: #065F46;
@@ -85,13 +79,11 @@ html[data-accent="green"] {
 
 html.dark[data-accent="green"] {
   --accent-color: #34D399;
-  /* Яркий изумруд/мята */
   --btn-primary: #10B981;
   --emoji-tone-item: #34D399;
   --accent-bg: rgba(52, 211, 153, 0.22);
 }
 
-/* 4. ОРАНЖЕВЫЙ (ORANGE) */
 html[data-accent="orange"] {
   --accent-color: #D97706;
   --btn-primary: #B45309;
@@ -101,13 +93,11 @@ html[data-accent="orange"] {
 
 html.dark[data-accent="orange"] {
   --accent-color: #FBBF24;
-  /* Сочный янтарный */
   --btn-primary: #F59E0B;
   --emoji-tone-item: #FBBF24;
   --accent-bg: rgba(251, 191, 36, 0.22);
 }
 
-/* 5. РОЗОВЫЙ (PINK) */
 html[data-accent="pink"] {
   --accent-color: #DB2777;
   --btn-primary: #BE185D;
@@ -117,13 +107,11 @@ html[data-accent="pink"] {
 
 html.dark[data-accent="pink"] {
   --accent-color: #F472B6;
-  /* Яркий розовый */
   --btn-primary: #EC4899;
   --emoji-tone-item: #F472B6;
   --accent-bg: rgba(244, 114, 182, 0.22);
 }
 
-/* 6. СЕРЫЙ (GRAY) */
 html[data-accent="gray"] {
   --accent-color: #475569;
   --btn-primary: #334155;
@@ -133,15 +121,12 @@ html[data-accent="gray"] {
 
 html.dark[data-accent="gray"] {
   --accent-color: #CBD5E1;
-  /* Светло-серебристый */
   --btn-primary: #94A3B8;
   --emoji-tone-item: #CBD5E1;
   --accent-bg: rgba(203, 213, 225, 0.22);
 }
 
-
-
-/* Обычный сброс отступов — то, что у тебя уже есть в проекте */
+/* Base reset */
 * {
   margin: 0;
   padding: 0;
@@ -151,19 +136,17 @@ html.dark[data-accent="gray"] {
 body {
   font-family: 'Inter', 'Segoe UI', sans-serif;
   padding: 40px;
-
   background: var(--bg);
   color: var(--text-primary);
 }
 
-/* ===== Стили самой модалки ===== */
-
+/* Dialog container. Text selection is disabled here on purpose — the modal
+   is a control panel, not a document, and every value has its own copy
+   affordance (see [11] copy-value-btn) where copying matters. */
 .settings-modal,
 dialog {
-  /* Тот же принцип, что и раньше: фиксированный размер с запасом под контент */
   width: 950px;
   max-width: 90vw;
-  /* На небольших экранах не вылезет за границы */
   height: 600px;
   max-height: 85vh;
 
@@ -171,7 +154,6 @@ dialog {
   border-radius: 16px;
   background: var(--modal-surface);
   padding: 0;
-  /* ВАЖНО: убираем padding у самого dialog, чтобы колонки упирались в края */
 
   position: fixed;
   top: 50%;
@@ -179,28 +161,23 @@ dialog {
   transform: translate(-50%, -50%);
 
   overflow: hidden;
-  /* чтобы скругления углов не "срезались" внутренним контентом */
-
   user-select: none;
 }
 
-/* ВАЖНО: display: flex задаём ТОЛЬКО когда у dialog есть атрибут [open]
-   (его браузер сам добавляет при showModal()).
-   Если написать просто "dialog { display: flex }" без [open] —
-   это перебьёт встроенное правило браузера "display: none" для закрытых диалогов,
-   и модалка будет видна на странице ВСЕГДА, даже без клика по кнопке. */
+/* display:flex is scoped to [open] so the dialog stays hidden until
+   showModal() runs — a bare "dialog { display:flex }" would override the
+   browser's built-in "display:none" for closed dialogs. */
 .settings-modal[open],
 dialog[open] {
   display: flex;
   flex-direction: column;
 }
 
-/* Затемнённый фон позади модалки — браузер создаёт его сам */
 dialog::backdrop {
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* ===== Шапка ===== */
+/* [02] Modal header */
 
 .modal-header {
   display: flex;
@@ -210,7 +187,6 @@ dialog::backdrop {
 
   padding: 20px 24px;
   flex-shrink: 0;
-  /* шапка никогда не сжимается */
 }
 
 .modal-title {
@@ -221,23 +197,21 @@ dialog::backdrop {
 
 .modal-title i {
   font-size: 22px;
-  color: var(--modal-heading)
+  color: var(--modal-heading);
 }
 
 .modal-title h2 {
   font-size: 20px;
   font-weight: 700;
-  color: var(--modal-heading)
+  color: var(--modal-heading);
 }
 
 .modal-header::after {
   content: "";
   display: block;
-
   width: 100%;
   height: 1px;
   background-color: var(--modal-border);
-
   position: absolute;
   bottom: 0;
   left: 0;
@@ -247,11 +221,9 @@ dialog::backdrop {
   background: none;
   border: none;
   cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 32px;
   height: 32px;
   border-radius: 8px;
@@ -266,17 +238,13 @@ dialog::backdrop {
   background: var(--modal-surface-hover);
 }
 
-/* ===== Основная часть: две колонки ===== */
+/* [03] Sidebar navigation */
 
 .modal-content {
   display: flex;
   flex: 1;
-  /* занимает всё оставшееся место под шапкой */
   overflow: hidden;
-  /* каждая колонка скроллится независимо, если понадобится */
 }
-
-/* ---- Левая колонка (навигация) ---- */
 
 .modal-sidebar {
   width: 260px;
@@ -330,7 +298,8 @@ dialog::backdrop {
   color: var(--modal-heading);
 }
 
-/* Карточка с версией приложения внизу боковой колонки */
+/* [04] App info card */
+
 .app-info-card {
   padding: 12px;
 }
@@ -348,11 +317,10 @@ dialog::backdrop {
   margin-top: 4px;
 }
 
-/* ---- Правая колонка (контент) ---- */
+/* Main content area (right column) and tab switching */
 
 .modal-main {
   flex: 1;
-
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -361,11 +329,32 @@ dialog::backdrop {
 .modal-main-scroll {
   flex: 1;
   overflow-y: auto;
-  /* контент скроллится, если не помещается */
   padding: 24px 28px;
 }
 
-/* Все панели скрыты по умолчанию, кроме активной */
+/* [15] Scrollbar styling for the content area */
+.modal-main-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--modal-border-strong) transparent;
+}
+
+.modal-main-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-main-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-main-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--modal-border-strong);
+  border-radius: 999px;
+}
+
+.modal-main-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--modal-text-muted);
+}
+
 .tab-panel {
   display: none;
 }
@@ -390,7 +379,8 @@ dialog::backdrop {
   margin-top: 4px;
 }
 
-/* Одна строка настройки */
+/* [08] Generic setting row (used in General / Appearance / Privacy) */
+
 .setting-row {
   display: flex;
   align-items: center;
@@ -425,7 +415,6 @@ dialog::backdrop {
   font-size: 14px;
   min-width: 160px;
   cursor: pointer;
-
   outline: none;
 
   appearance: none;
@@ -435,7 +424,6 @@ dialog::backdrop {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
-  /* ← вот эту цифру (12px) и меняй */
   background-size: 16px;
 }
 
@@ -443,7 +431,119 @@ dialog::backdrop {
   min-width: 90px;
 }
 
-/* ===== Appearance tab ===== */
+.setting-control-full {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* [09] Custom select dropdown (replaces native <select>) */
+
+.custom-select {
+  position: relative;
+}
+
+.custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  padding: 8px 12px;
+  min-width: 160px;
+
+  border: 1px solid var(--modal-border-strong);
+  border-radius: 8px;
+  background: var(--modal-surface);
+  color: var(--modal-heading);
+
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.custom-select-trigger i {
+  font-size: 16px;
+  color: var(--modal-text);
+  transition: transform 0.15s ease;
+}
+
+.custom-select.open .custom-select-trigger i {
+  transform: rotate(180deg);
+}
+
+.custom-select-options {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+
+  min-width: 200px;
+  max-height: 240px;
+  overflow-y: auto;
+
+  background: var(--modal-surface);
+  border: 1px solid var(--modal-border-strong);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+
+  padding: 6px;
+  display: none;
+  z-index: 10;
+}
+
+.dark .custom-select-options {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.custom-select.open .custom-select-options {
+  display: block;
+}
+
+/* Flips the dropdown above the trigger when there isn't enough room below
+   (toggled via JS by measuring available viewport space) */
+.custom-select.open-up .custom-select-options {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+
+.custom-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 12px;
+  border-radius: 8px;
+
+  font-size: 14px;
+  color: var(--modal-text);
+  cursor: pointer;
+}
+
+.custom-select-option i {
+  font-size: 16px;
+  color: var(--modal-heading);
+  visibility: hidden;
+}
+
+.custom-select-option.selected i {
+  visibility: visible;
+}
+
+.custom-select-option:hover {
+  background: var(--modal-surface-hover);
+  color: var(--modal-heading);
+}
+
+.custom-select-option.selected {
+  background: var(--modal-surface-selected);
+  color: var(--modal-heading);
+  font-weight: 600;
+}
+
+.custom-select-small .custom-select-trigger {
+  min-width: 100px;
+}
+
+/* [07] Theme switcher cards (Light / Dark / System) */
 
 .group-label {
   font-size: 13px;
@@ -455,6 +555,13 @@ dialog::backdrop {
 
 .group-label:first-of-type {
   margin-top: 0;
+}
+
+.group-sublabel {
+  font-size: 12px;
+  color: var(--modal-text-muted);
+  margin-bottom: 12px;
+  margin-top: -4px;
 }
 
 .theme-options {
@@ -532,6 +639,8 @@ dialog::backdrop {
   margin-top: 2px;
 }
 
+/* [08] Accent color swatches */
+
 .color-options {
   display: flex;
   gap: 10px;
@@ -555,157 +664,7 @@ dialog::backdrop {
   pointer-events: none;
 }
 
-.setting-control-full {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-/* Переключатель (toggle switch) */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 44px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.switch-track {
-  position: absolute;
-  inset: 0;
-  background-color: var(--modal-border-strong);
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.switch-track::before {
-  content: "";
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  left: 3px;
-  top: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: transform 0.2s ease;
-}
-
-.switch input:checked+.switch-track {
-  background-color: var(--accent-color);
-
-}
-
-.switch input:checked+.switch-track::before {
-  transform: translateX(20px);
-}
-
-/* ===== Футер ===== */
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-
-  padding: 16px 28px;
-  border-top: 1px solid var(--modal-border);
-  flex-shrink: 0;
-}
-
-.btn {
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-secondary {
-  background: var(--modal-surface);
-  border: 1px solid var(--modal-border);
-  color: var(--modal-text);
-}
-
-.btn-secondary:hover {
-  background: var(--modal-surface-hover);
-}
-
-.btn-primary {
-  background: var(--accent-color);
-  color: var(--modal-surface);
-}
-
-.btn-primary:hover {
-  background: var(--btn-primary);
-}
-
-/* Красная кнопка для опасных действий (удаление и т.д.) */
-.btn-danger {
-  background: var(--modal-surface);
-  border: 1px solid var(--danger-color);
-  color: var(--danger-color);
-}
-
-.btn-danger:hover {
-  background: var(--danger-color);
-  color: var(--modal-surface);
-}
-
-/* Лёгкая красная подсветка для строки с опасным действием */
-.danger-row {
-  border-color: var(--danger-border);
-  background: var(--danger-bg);
-}
-
-.justify-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* Выравнивает текст по вертикали */
-}
-
-/* Сбрасываем стандартные отступы у параграфов внутри */
-.justify-content p {
-  margin: 0;
-}
-
-.version-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  /* Увеличьте значение (8px, 12px, 16px), чтобы сдвинуть номер левее */
-
-  /* Задайте нужный цвет серого (или возьмите тот, что у .setting-desc) */
-  color: var(--modal-text-muted);
-}
-
-/* Применяем цвет обертки к SVG */
-.version-wrapper svg {
-  stroke: currentColor;
-  /* Иконка автоматически подтянет цвет (color) из родителя */
-}
-
-.about-version {
-  font-size: 15px;
-  color: var(--modal-text-muted);
-  margin-top: 2px;
-}
-
-
-/* ===== Emoji skin tone (в стиле GitHub — радио в ряд) ===== */
-
-.group-sublabel {
-  font-size: 12px;
-  color: var(--modal-text-muted);
-  margin-bottom: 12px;
-  margin-top: -4px;
-}
+/* [09] Emoji skin tone preference row */
 
 .emoji-tone-row {
   display: flex;
@@ -757,122 +716,72 @@ dialog::backdrop {
   font-size: 20px;
 }
 
-/* ===== Custom select (замена нативного <select>) ===== */
+/* [12] Toggle switch */
 
-
-.custom-select {
+.switch {
   position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
-.custom-select-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-
-  padding: 8px 12px;
-  min-width: 160px;
-
-  border: 1px solid var(--modal-border-strong);
-  border-radius: 8px;
-  background: var(--modal-surface);
-
-  font-size: 14px;
-  font-family: inherit;
-  cursor: pointer;
-
-  color: var(--modal-heading);
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
-.custom-select-trigger i {
-  font-size: 16px;
-  color: var(--modal-text);
-  transition: transform 0.15s ease;
-}
-
-.custom-select.open .custom-select-trigger i {
-  transform: rotate(180deg);
-}
-
-.custom-select-options {
+.switch-track {
   position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-
-  min-width: 200px;
-  max-height: 240px;
-  overflow-y: auto;
-
-  background: var(--modal-surface);
-  border: 1px solid var(--modal-border-strong);
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-
-  padding: 6px;
-
-  display: none;
-  z-index: 10;
-}
-
-.dark .custom-select-options {
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-}
-
-.custom-select.open .custom-select-options {
-  display: block;
-}
-
-.custom-select.open-up .custom-select-options {
-  top: auto;
-  bottom: calc(100% + 6px);
-}
-
-.custom-select-option {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 10px 12px;
-  border-radius: 8px;
-
-  font-size: 14px;
-  color: var(--modal-text);
-  /* Явное задание цвета текста */
+  inset: 0;
+  background-color: var(--modal-border-strong);
+  border-radius: 999px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.custom-select-option i {
-  font-size: 16px;
-  color: var(--modal-heading);
-  visibility: hidden;
+.switch-track::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
 }
 
-.custom-select-option.selected i {
-  visibility: visible;
+.switch input:checked+.switch-track {
+  background-color: var(--accent-color);
 }
 
-.custom-select-option:hover {
-  background: var(--modal-surface-hover);
-  color: var(--modal-heading);
+.switch input:checked+.switch-track::before {
+  transform: translateX(20px);
 }
 
-.custom-select-option.selected {
-  background: var(--modal-surface-selected);
-  color: var(--modal-heading);
-  font-weight: 600;
+/* Danger row / danger button (used in Privacy) */
+
+.danger-row {
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
 }
 
-.custom-select-small .custom-select-trigger {
-  min-width: 100px;
+.btn-danger {
+  background: var(--modal-surface);
+  border: 1px solid var(--danger-color);
+  color: var(--danger-color);
 }
 
-.about {
-  font-size: 15px;
-  color: var(--modal-text-muted);
-  margin-top: 2px
+.btn-danger:hover {
+  background: var(--danger-color);
+  color: var(--modal-surface);
 }
 
-/* Единая карточка-группа */
+/* [11] About tab */
+
+/* Card that groups related rows together */
 .about-card {
   background-color: var(--modal-surface);
   border: 1px solid var(--modal-border);
@@ -881,24 +790,22 @@ dialog::backdrop {
   overflow: hidden;
 }
 
-/* Строки внутри карточки */
-.setting-row {
+/* Row inside an about-card: flat, separated by a bottom border instead of
+   the boxed .setting-row style used elsewhere. Kept as its own class to
+   avoid colliding with .setting-row (previously both used the same
+   selector, which silently overrode the boxed style everywhere). */
+.about-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 14px 18px;
-  background: transparent;
-  border: none;
   border-bottom: 1px solid var(--modal-border);
-  border-radius: 0; 
-  margin: 0;
 }
 
-.setting-row:last-child {
+.about-row:last-child {
   border-bottom: none;
 }
 
-/* Подписи и значения внутри строк */
 .setting-subtitle {
   font-size: 13px;
   color: var(--modal-text-muted);
@@ -906,15 +813,15 @@ dialog::backdrop {
   font-weight: normal;
 }
 
-/* Единый стиль внешней формы для всех элементов справа */
+/* Shared look for both a plain value (.setting-value) and a clickable
+   link (.setting-link) on the right side of an about-row */
 .setting-value,
-/* Единый стиль плашки при наведении для ссылок */
 .setting-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 6px 10px;
-  margin-right: -10px; /* Компенсируем padding, чтобы текст справа визуально стоял ровно */
+  margin-right: -10px;
   font-size: 15px;
   font-weight: 500;
   color: var(--modal-text-muted);
@@ -933,38 +840,7 @@ dialog::backdrop {
   flex-shrink: 0;
 }
 
-.setting-link svg {
-  stroke: currentColor;
-  flex-shrink: 0;
-}
-
-/* ===== Стилизация скроллбара правого блока ===== */
-
-/* 1. Современный стандарт (Firefox / Chrome) */
-.modal-main-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: var(--modal-border-strong) transparent;
-}
-
-/* 2. Для WebKit-браузеров (Chrome, Edge, Safari) */
-.modal-main-scroll::-webkit-scrollbar {
-  width: 6px; /* Ширина ползунка */
-}
-
-.modal-main-scroll::-webkit-scrollbar-track {
-  background: transparent; /* Прозрачный фон дорожки */
-}
-
-.modal-main-scroll::-webkit-scrollbar-thumb {
-  background-color: var(--modal-border-strong); /* Цвет ползунка из переменных темы */
-  border-radius: 999px; /* Закругление */
-}
-
-.modal-main-scroll::-webkit-scrollbar-thumb:hover {
-  background-color: var(--modal-text-muted); /* Цвет при наведении */
-}
-
-/* ===== Кнопка копирования версии ===== */
+/* Copy-to-clipboard button (Version row) */
 .copy-value-btn {
   display: inline-flex;
   align-items: center;
@@ -995,4 +871,44 @@ dialog::backdrop {
 .copy-value-btn svg {
   stroke: currentColor;
   flex-shrink: 0;
+}
+
+/* [13] Modal footer */
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  padding: 16px 28px;
+  border-top: 1px solid var(--modal-border);
+  flex-shrink: 0;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: var(--modal-surface);
+  border: 1px solid var(--modal-border);
+  color: var(--modal-text);
+}
+
+.btn-secondary:hover {
+  background: var(--modal-surface-hover);
+}
+
+.btn-primary {
+  background: var(--accent-color);
+  color: var(--modal-surface);
+}
+
+.btn-primary:hover {
+  background: var(--btn-primary);
 }
