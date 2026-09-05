@@ -180,6 +180,8 @@ dialog {
 
   overflow: hidden;
   /* чтобы скругления углов не "срезались" внутренним контентом */
+
+  user-select: none;
 }
 
 /* ВАЖНО: display: flex задаём ТОЛЬКО когда у dialog есть атрибут [open]
@@ -898,7 +900,7 @@ dialog::backdrop {
 
 /* Подписи и значения внутри строк */
 .setting-subtitle {
-  font-size: 15px;
+  font-size: 13px;
   color: var(--modal-text-muted);
   margin-top: 2px;
   font-weight: normal;
@@ -906,30 +908,29 @@ dialog::backdrop {
 
 /* Единый стиль внешней формы для всех элементов справа */
 .setting-value,
+/* Единый стиль плашки при наведении для ссылок */
 .setting-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  padding: 6px 10px;
+  margin-right: -10px; /* Компенсируем padding, чтобы текст справа визуально стоял ровно */
   font-size: 15px;
   font-weight: 500;
   color: var(--modal-text-muted);
   text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.setting-value svg,
+.setting-link:hover {
+  background: var(--modal-surface-hover);
+  color: var(--modal-heading);
+}
+
 .setting-link svg {
   stroke: currentColor;
   flex-shrink: 0;
-  margin-left: 2px; /* Дополнительный отступ слева от иконки */
-}
-
-/* Эффект при наведении только для ссылок */
-.setting-link:hover {
-  opacity: 0.75;
-}
-
-.setting-link:hover {
-  opacity: 0.75;
 }
 
 .setting-link svg {
@@ -961,4 +962,37 @@ dialog::backdrop {
 
 .modal-main-scroll::-webkit-scrollbar-thumb:hover {
   background-color: var(--modal-text-muted); /* Цвет при наведении */
+}
+
+/* ===== Кнопка копирования версии ===== */
+.copy-value-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  margin-right: -8px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--modal-text-muted);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.copy-value-btn:hover {
+  background: var(--modal-surface-hover);
+  color: var(--modal-heading);
+}
+
+.copy-value-btn.copied {
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.15);
+}
+
+.copy-value-btn svg {
+  stroke: currentColor;
+  flex-shrink: 0;
 }

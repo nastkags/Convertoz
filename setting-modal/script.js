@@ -181,3 +181,32 @@ document.addEventListener('click', (event) => {
     }
   });
 });
+
+// ===== Копирование версии в буфер обмена =====
+const copyVersionBtn = document.querySelector('#copyVersionBtn');
+if (copyVersionBtn) {
+  const copyIcon = copyVersionBtn.querySelector('.copy-icon');
+  const checkIcon = copyVersionBtn.querySelector('.check-icon');
+
+  copyVersionBtn.addEventListener('click', async () => {
+    const versionText = copyVersionBtn.querySelector('.version-text').textContent.trim();
+
+    try {
+      await navigator.clipboard.writeText(versionText);
+
+      // Показываем галочку и подсвечиваем кнопку
+      copyVersionBtn.classList.add('copied');
+      copyIcon.style.display = 'none';
+      checkIcon.style.display = 'block';
+
+      // Возвращаем исходный вид через 1.5 секунды
+      setTimeout(() => {
+        copyVersionBtn.classList.remove('copied');
+        copyIcon.style.display = 'block';
+        checkIcon.style.display = 'none';
+      }, 1500);
+    } catch (err) {
+      console.error('Не удалось скопировать: ', err);
+    }
+  });
+}

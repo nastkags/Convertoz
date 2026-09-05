@@ -30,3 +30,6 @@ mail SVG:
 </svg>
 
 ---
+
+
+ПОФИКСИ "Help improve Convertoz by contributing." И ПОДОБНЫЙ ТЕКСТ В КАНАЛЕ ABOUT
